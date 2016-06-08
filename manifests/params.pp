@@ -16,6 +16,7 @@ class php::params inherits php::globals {
 
   case $::osfamily {
     'Debian': {
+      $apache_inifile          = "${config_root}/apache2/php.ini"
       $config_root             = $php::globals::globals_config_root
       $config_root_ini         = "${config_root}/mods-available"
       $config_root_inifile     = "${config_root}/php.ini"
@@ -57,6 +58,7 @@ class php::params inherits php::globals {
     }
 
     'Suse': {
+      $apache_inifile          = "${config_root}/apache/php.ini"
       $config_root             = $php::globals::globals_config_root
       $config_root_ini         = "${config_root}/conf.d"
       $config_root_inifile     = "${config_root}/php.ini"
@@ -92,6 +94,7 @@ class php::params inherits php::globals {
       }
     }
     'RedHat': {
+      $apache_inifile          = '/etc/php.ini'
       $config_root_ini         = '/etc/php.d'
       $config_root_inifile     = '/etc/php.ini'
       $common_package_names    = []
@@ -116,6 +119,7 @@ class php::params inherits php::globals {
       $ext_tool_enabled        = false
     }
     'FreeBSD': {
+      $apache_inifile          = "${config_root}/php.ini"
       $config_root             = $php::globals::globals_config_root
       $config_root_ini         = "${config_root}/php"
       $config_root_inifile     = "${config_root}/php.ini"
