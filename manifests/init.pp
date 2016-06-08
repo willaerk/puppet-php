@@ -139,6 +139,9 @@ class php (
     class { '::php::cli':
       settings => $real_settings,
     } ->
+    class { '::php::apache':
+      settings => $real_settings,
+    } ->
   anchor { 'php::end': }
 
   # Configure global PHP settings in php.ini
@@ -196,7 +199,7 @@ class php (
   }
 
   create_resources('::php::extension', $real_extensions, {
-    require => Class['::php::cli'],
+    require => [ Class['::php::cli'], Class['::php::apache']],
     before  => Anchor['php::end']
   })
 
