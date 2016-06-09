@@ -77,6 +77,7 @@
 class php (
   $ensure             = $::php::params::ensure,
   $manage_repos       = $::php::params::manage_repos,
+  $apache             = true,
   $fpm                = true,
   $fpm_service_enable = $::php::params::fpm_service_enable,
   $fpm_service_ensure = $::php::params::fpm_service_ensure,
@@ -139,9 +140,6 @@ class php (
     class { '::php::cli':
       settings => $real_settings,
     } ->
-    class { '::php::apache':
-      settings => $real_settings,
-    } ->
   anchor { 'php::end': }
 
   # Configure global PHP settings in php.ini
@@ -150,6 +148,14 @@ class php (
     class {'::php::global':
       settings => $real_settings,
     } ->
+    Anchor['php::end']
+  }
+
+  if $apache {
+    Anchor['php::begin'] ->
+      class { '::php::apache':
+        settings       => $real_settings
+      } ->
     Anchor['php::end']
   }
 
@@ -165,6 +171,7 @@ class php (
       } ->
     Anchor['php::end']
   }
+
   if $embedded {
     if $::osfamily == 'RedHat' and $fpm {
       # Both fpm and embeded SAPIs are using same php.ini
@@ -177,6 +184,7 @@ class php (
       } ->
     Anchor['php::end']
   }
+
   if $dev {
     Anchor['php::begin'] ->
       class { '::php::dev': } ->
@@ -201,7 +209,7 @@ class php (
   }
 
   create_resources('::php::extension', $real_extensions, {
-    require => [ Class['::php::cli'], Class['::php::apache']],
+    require => Class['::php::cli'],
     before  => Anchor['php::end']
   })
 
