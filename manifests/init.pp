@@ -153,6 +153,7 @@ class php (
 
   if $apache {
     Anchor['php::begin'] ->
+      class { '::php::packages': } ->
       class { '::php::apache':
         settings       => $real_settings
       } ->

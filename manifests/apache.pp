@@ -21,6 +21,11 @@ class php::apache(
   validate_hash($settings)
 
   $real_settings = deep_merge($settings, hiera_hash('php::apache::settings', {}))
+  $settingsdir = dirname($inifile)
+
+  file { $settingsdir:
+    ensure => directory
+  }
 
   ::php::config { 'apache':
     file   => $inifile,
