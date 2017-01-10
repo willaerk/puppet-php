@@ -31,4 +31,6 @@ class php::apache(
     file   => $inifile,
     config => $real_settings,
   }
+
+  Class['::php::packages'] -> Class['::php::apache']
 }
