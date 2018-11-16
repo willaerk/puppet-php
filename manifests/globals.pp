@@ -55,9 +55,6 @@ class php::globals (
         }
       }
     }
-    'Suse': {
-      $default_config_root = '/etc/php5'
-    }
     'RedHat': {
       $default_config_root = '/etc/php.d'
     }

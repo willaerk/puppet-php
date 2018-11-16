@@ -19,9 +19,6 @@ class php::repo {
         }
       }
     }
-    'Suse': {
-      contain ::php::repo::suse
-    }
     'RedHat': {
       contain '::php::repo::redhat'
     }
